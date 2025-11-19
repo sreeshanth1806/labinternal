@@ -1,0 +1,237 @@
+**Jenkins automation**
+
+Build Steps: Add Build Step -> "Invoke top-level Maven targets"
+Maven version: MAVEN_HOME
+Goals: clean
+
+Add Build Step -> "Invoke top-level Maven targets"
+Maven version: MAVEN_HOME
+Goals: install
+
+Post-build Actions: Add Post Build Action -> "Archive the artifacts"
+Files to archive: **/*
+Add Post Build Action -> "Build other projects"
+Projects to build: MavenJava_Test
+Trigger: Only if build is stable
+
+Step 3: Create Freestyle Project (e.g., MavenJava_Test)
+Enter project name (e.g., MavenJava_Test) ├── Click "OK"
+
+Configure the project:
+Description: "Test demo"
+
+Build Environment:
+Check: "Delete the workspace before build starts"
+
+Add Build Step -> "Copy artifacts from another project"
+Project name: MavenJava_Build
+Build: Stable build only
+Artifacts to copy: **/*
+
+Add Build Step -> "Invoke top-level Maven targets"
+Maven version: MAVEN_HOME
+Goals: test
+
+Post-build Actions: Add Post Build Action -> "Archive the artifacts"
+Files to archive: **/*
+
+├── Add Post Build Action -> "Build other projects"
+└── Projects to build: MavenWeb_Deploy (for web)
+
+Apply and Save
+Step 4: Create Pipeline View for Maven Java project
+Click "+" beside "All" on the dashboard
+Enter name: Java_Pipeline
+Select "Build pipeline view"
+
+create Pipeline Flow: Layout: Based on upstream/downstream relationship
+Initial job: MavenJava_Build
+
+Apply and Save OK
+Step 5: Run the Pipeline and Check Output
+Click on the trigger to run the pipeline
+
+**web automation**
+
+Configure the project:
+├── Description: "Web Build demo"
+
+dd Build Step -> "Copy artifacts from another project"
+└── Project name: MavenWeb_Test
+└── Build: Stable build only
+└── Artifacts to copy: **/*
+
+Post-build Actions:
+├── Add Post Build Action -> "Deploy WAR/EAR to a container"
+└── WAR/EAR File: **/*.war
+└── Context path: Webpath
+└── Add container -> Tomcat 9.x remote
+└── Credentials: Username: admin, Password: 1234
+
+── Tomcat URL: https://localhost:8080/
+
+Select "Build pipeline view"
+└── Pipeline Flow:
+├── Layout: Based on upstream/downstream relationship
+├── Initial job: MavenWeb_Build
+
+---
+
+**pipeline using Script**
+
+General :
+Description :-  provide the description of the project
+Build triggers:  here we can provide with build triggers of you choice
+Advance project option:
+Definition:
+Choose pipeline script
+Here code for pipeline -script
+
+Pipeline creation
+Step 1: click on new item and select Pipeline
+
+---
+
+**minikube** 
+
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+
+installing minikube
+
+Step 1: Start Minikube Cluster
+ Open your terminal and run the command:
+minikube start
+
+minikube status
+
+kubectl create deployment internal —image=sreeshanth1912/internal
+
+kubectl get deployments
+
+kubectl expose deployment internal —type=NodePort —port=8080 —target-port=8080
+
+kubectl get services
+
+kubectl port-forward svc/internal 5000:8080
+
+kubectl scale deployment internal —replicas=4
+
+docker run -d -p 3000:80 jasonrivers/nagios
+
+---
+
+**EMAIL**
+
+ngrok.exe http 8888
+
+1. Click Configure.
+2. Scroll down to the Build Triggers section.
+3. Check the box: ✅GitHub hook trigger for GITScm polling
+4. Click Save.
+
+ii. Generate App Password for Jenkins
+ Go to:
+o Security → App passwords
+ Select:
+o App: Other (Custom name)
+o Name: Jenkins-Demo
+ Click Generate
+ Copy the 16-digit app password
+o Save it in a secure location (e.g., Notepad)
+
+i. Open Jenkins Dashboard
+ii. Navigate to:
+ Manage Jenkins → Manage Plugins
+iii. Install Plugin:
+ Search for and install:
+o Email Extension Plugin
+
+A. E-mail Notification Section
+Field
+SMTP Server
+Value
+[smtp.gmail.com](http://smtp.gmail.com/)
+Use SMTP Auth ✅ Enabled
+User Name
+Password
+Use SSL
+SMTP Port
+Your Gmail ID (e.g., [archanareddykmit@gmail.com](mailto:archanareddykmit@gmail.com))
+Paste the 16-digit App Password
+✅ Enabled
+465
+Reply-To Address Your Gmail ID (same as above)
+➤ Test Configuration
+
+B. Extended E-mail Notification Section
+Field
+SMTP Server
+SMTP Port
+Use SSL
+Credentials
+Value
+[smtp.gmail.com](http://smtp.gmail.com/)
+465
+✅ Enabled
+Add Gmail ID and App Password as Jenkins credentials
+Default Content Type text/html or leave default
+Default Recipients
+Triggers
+Leave empty or provide default emails
+Select as per needs (e.g., Failure)
+
+1. Configure Email Notifications for a Jenkins Job
+i. Go to:
+ Jenkins → Select a Job → Configure
+ii. In the Post-build Actions section:
+ Click: Add post-build action → Editable Email Notification
+A. Fill in the fields:
+Field
+Value
+Project Recipient List Add recipient email addresses (comma-separated)
+Content Type
+Triggers
+Attachments
+iii. Click Save
+Default (text/plain) or text/html
+Select events (e.g., Failure, Success, etc.)
+(Optional) Add logs, reports, etc.
+
+---
+
+**AWS**
+
+Step 1: Login to AWS /canvas account
+Step 2: Services --  EC2
+Step 3: Choose region which is near ?
+Services -- EC2 --- Launch Instance
+
+Stage 1  --Name (Giving name to the machine) ubuntu
+Stage 2  -- Select AMI  ( Note: Select free tier eligible ) ubuntu server
+Stage 3   --  Architecture as 64-bit
+
+Stage 5  --  Create a new keypair---a keypair will downloaded  with extension .pem
+Store
+key in folder AWS
+Stage 6  -- Network Setting ----Create Security group  --  ( It deals with ports )
+
+Run the following commands to install s/w
+
+1. Update all softwares in Ubuntu by command
+sudo apt update
+2. 
+
+Install docker by command
+sudo apt-get install [docker.io](http://docker.io/)
+
+Install git by command
+sudo apt install git
+4. Install nano( text editor) by command
+Sudo apt install nano
+
+Step 1:- build your image
+docker build –t <imagename> .(dot)
+
+Step 2:- check for images
+ Step 3:- run image
+ docker  run –d  --name app-demo –p 6060:8080
