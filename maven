@@ -1,0 +1,15 @@
+Open the eclipse and click on file>new>Maven project 
+select the default workspace and click on next
+in the filter option select the one maven-archetype-quickstart 1.5
+give the Group Id and Artifact Id and click on next
+In the console the progress will be showed type y (refers to yes) and press enter
+write the code in the App.java file
+ right click on the root folder and select show in git bash
+ push to the git repo
+ --------------------------------------------------------------------------------
+ Create a new maven project and give the details
+ Click y to continue the creation of project
+ If the build is success it will show the message
+ write the html code for the web page:
+ Select run on server
+ 
