@@ -207,4 +207,85 @@ git add .
 git commit -m "First commit"
 git push -u origin main
 
-
+-----------------------------------------
+git stash
+git pull --rebase origin main
+git stash pop
+------------------------------------------------------------------------
+1. You've cloned a repository and made some changes to a local branch. Now you want to push 
+these changes to the remote repository, but you're getting an error saying "rejected - non-fast
+forward." How would you resolve this?
+ This error occurs when the remote branch has changes that your local branch doesn’t. To 
+resolve it:
+ git pull --rebase origin <branch-name>
+ This rebases your local changes on top of the latest remote changes. After resolving any 
+conflicts, push your changes:
+ 2. You’ve been working on a feature branch, and now you need to push it to the remote 
+repository. However, the remote repository already has a main branch. How do you push your 
+feature branch without affecting the main branch?
+ You can push your feature branch independently:
+ git push origin feature/feat-1
+ This creates a new remote branch and does not affect the main branch.
+ 3. You cloned a remote repository, but after a while, the repository’s structure changed and new 
+branches were added. How would you keep your local repository updated with the latest 
+changes from the remote repository?
+Use the following commands:
+ git fetch origin
+ This updates your local copy with all branches and changes from the remote. You can then 
+check out new branches using:
+ git checkout branch-name
+ 4. A colleague has pushed some changes to the main branch, but you have local changes in the 
+same branch. You want to pull their changes, but you want to avoid merge conflicts. What steps 
+would you take?
+ Use rebase to integrate their changes on top of your work:
+ git stash                   
+# Temporarily store your changes
+ git pull --rebase origin main
+ git stash pop               
+# Apply your changes on top
+ This reduces the chance of conflicts and keeps history clean.
+ 5. You accidentally pushed a sensitive file (e.g., API keys) to the remote repository. How would 
+you fix this situation?
+ Steps to remove the sensitive data:
+ Remove the file and commit:
+ git rm --cached path/to/file
+ git commit -m "Remove sensitive file"
+ git push origin main
+ If the secret is in history, use git filter-branch or BFG Repo-Cleaner to rewrite history:
+ git filter-branch --force --index-filter \
+ "git rm --cached --ignore-unmatch path/to/file" \--prune-empty --tag-name-filter cat -- --all
+ Force push and rotate the secret.
+6. You’re working on a feature branch, and your manager requests that you integrate the latest 
+changes from main into your feature branch. What steps would you take?
+ Use rebase or merge:
+ Rebase:
+ git checkout feature/your-feature
+ git fetch origin
+ git rebase origin/main
+ 7. You cloned a remote repository, but later you find that you need to push your changes to a 
+different remote repository. How do you configure your local repository to push to this new 
+remote?
+ Then push your changes:
+ git push origin branch-name
+ 8. After running git pull, you notice that your local branch is behind the remote branch. How 
+would you proceed to bring your local branch up to date without losing your local changes?
+ Use stash or rebase:
+ git stash
+ git pull --rebase origin branch-name
+ git stash pop
+ This ensures a clean rebase and retains your changes.
+ 9. You’re working on a project with multiple collaborators, and you notice that your local 
+changes conflict with changes that have been pushed by others. How would you resolve the 
+conflicts?
+ Pull the latest changes:
+ git pull origin branch-name
+ Git will highlight conflicts. Open the files, manually resolve the <<<<<<<, =======, and >>>>>>> 
+markers.
+Mark as resolved and commit:
+ git add .
+ git commit
+ 10. You’ve pushed a feature branch to a remote repository, but now you need to delete the 
+branch from the remote. How would you do that?
+ Use the following command:
+ git push origin --delete feature/branch-name
+ This will remove the branch from the remote repository
