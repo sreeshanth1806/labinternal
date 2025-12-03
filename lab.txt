@@ -116,7 +116,10 @@ kubectl port-forward svc/internal 5000:8080
 
 kubectl scale deployment internal —replicas=4
 
+
+docker pull jasonrivers/nagios:latest
 docker run -d -p 3000:80 jasonrivers/nagios
+ docker run --name nagiosdemo -p 8888:80 jasonrivers/nagios:latest
 
 ---
 
