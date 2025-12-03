@@ -131,6 +131,7 @@ ngrok.exe http 8888
 2. Scroll down to the Build Triggers section.
 3. Check the box: ✅GitHub hook trigger for GITScm polling
 4. Click Save.
+/github-webhook/
 
 ii. Generate App Password for Jenkins
  Go to:
